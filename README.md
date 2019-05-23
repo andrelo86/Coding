@@ -1,8 +1,10 @@
-### What do you need
+# What do you need
  - Java 8+
+ - Maven (Latest version)
 
-# Steps to execute
+## Steps to execute
   - Download the source code
   - Set java jdk accordingly
-  - Compile project using some IDE
-  - Run Main java class
+  - Run mvn clean install in project root
+  - Run Main java class to execute application
+  - Run StreamApiTest to execute unit tests
