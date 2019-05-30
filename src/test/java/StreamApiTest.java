@@ -1,6 +1,3 @@
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -10,34 +7,28 @@ import org.testng.annotations.Test;
 
 public class StreamApiTest {
 
-  private static final String TEST_DATA_FILEPATH = "src" +
-      File.separator + "test" +
-      File.separator + "java" +
-      File.separator + "resources" +
-      File.separator + "testdata";
-
-  private static final int WORDS_QUANTITY = 13;
+  private static final int WORDS_QUANTITY = 103;
 
 
   private DataProcessor dataProcessor = new DataProcessor();
 
   @Test
-  private void checkCorrectNumberOfWords() throws FileNotFoundException {
-    int numberOfWords = dataProcessor.sortWords(Main.getFileInputStream(TEST_DATA_FILEPATH)).size();
+  private void checkCorrectNumberOfWords() {
+    int numberOfWords = dataProcessor.sortWords(Utils.getDataInputStream()).size();
 
     Assert.assertEquals(numberOfWords, WORDS_QUANTITY, "Method is not counting words correctly.");
   }
 
   @Test
-  private void checkNotEmptyData() throws FileNotFoundException {
-    List<String> wordsList = dataProcessor.sortWords(Main.getFileInputStream(TEST_DATA_FILEPATH));
+  private void checkNotEmptyData() {
+    List<String> wordsList = dataProcessor.sortWords(Utils.getDataInputStream());
 
     Assert.assertTrue(!wordsList.isEmpty(),"Something went wrong processing data, Collection is EMPTY.");
   }
 
   @Test
   private void checkEmptyDataStreamForSortedList() {
-    InputStream inputStream = getEmptyInputStream();
+    InputStream inputStream = Utils.getEmptyInputStream();
     List<String> wordsList = dataProcessor.sortWords(inputStream);
 
     Assert.assertTrue(wordsList.isEmpty(), "Collection should be empty due to empty file.");
@@ -45,15 +36,18 @@ public class StreamApiTest {
 
   @Test
   private void checkEmptyDataStreamForSortedDecreasedMap() {
-    InputStream inputStream = getEmptyInputStream();
+    InputStream inputStream = Utils.getEmptyInputStream();
     Map<String, Long> wordsList = dataProcessor.countAndSortDecreasedWords(inputStream);
 
     Assert.assertTrue(wordsList.isEmpty(), "Collection should be empty due to empty file.");
   }
 
-  private InputStream getEmptyInputStream() {
-    String initString = "";
-    return new ByteArrayInputStream(initString.getBytes());
+  @Test
+  private void checkApplicationAllowsApostropheWords() {
+    InputStream inputStream = Utils.getDataInputStream();
+    List<String> wordsList = dataProcessor.sortWords(inputStream);
+
+    Assert.assertTrue(wordsList.contains("O'Neill"), "Collection should have O'Neill.");
   }
 
 }

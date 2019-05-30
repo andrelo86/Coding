@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,26 +10,21 @@ import java.util.Map;
  */
 public class Main {
 
-  private static final String PATH = "src" +
-    File.separator + "main" +
-    File.separator + "resources" +
-    File.separator + "text";
-
   public static void main(String[] args) throws FileNotFoundException {
-
+    String path = args[0];
     DataProcessor processor = new DataProcessor();
 
-    List<String> sortedList = processor.sortWords(getFileInputStream(PATH));
+    List<String> sortedList = processor.sortWords(getFileInputStream(path));
     System.out.println("Ordered List: " + sortedList);
 
-    Map<String, Long> sortedDecreasedMap = processor.countAndSortDecreasedWords(getFileInputStream(PATH));
+    Map<String, Long> sortedDecreasedMap = processor.countAndSortDecreasedWords(getFileInputStream(path));
     System.out.println("Sorted map in decreasing order:");
     for(Map.Entry entry : sortedDecreasedMap.entrySet()) {
       System.out.println(entry);
     }
   }
 
-  public static InputStream getFileInputStream(String filePath) throws FileNotFoundException {
+  private static InputStream getFileInputStream(String filePath) throws FileNotFoundException {
       return new FileInputStream(filePath);
   }
 

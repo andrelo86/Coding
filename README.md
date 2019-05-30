@@ -6,5 +6,6 @@
   - Download the source code
   - Set java jdk accordingly
   - Run mvn clean install in project root
-  - Run Main java class to execute application
+  - Run javac Main
+  - Run java Main "filepath" to process file through application
   - Run StreamApiTest to execute unit tests

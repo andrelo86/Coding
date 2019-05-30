@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  */
 public class DataProcessor {
 
-  private static final String REGEX = "\\W+";
+  private static final String REGEX = "[^\\w']";
 
   public DataProcessor() {}
 
@@ -28,14 +28,13 @@ public class DataProcessor {
    * @param fileInputStream : Object SFileInputStream()
    */
   public List<String> sortWords(InputStream fileInputStream) {
-      List<String> sortedList = new BufferedReader((new InputStreamReader(fileInputStream)))
+      return new BufferedReader((new InputStreamReader(fileInputStream)))
           .lines()
           .map(it -> it.split(REGEX))
           .flatMap(Stream::of)
           .filter(s -> !s.isEmpty())
           .sorted().collect(
               Collectors.toList());
-      return sortedList;
   }
 
   /**
